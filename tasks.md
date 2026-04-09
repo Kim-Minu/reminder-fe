@@ -4,89 +4,88 @@
 
 ---
 
-## Phase 1 — 프로젝트 기반 구축
+## Phase 1 — 프로젝트 기반 구축 ✅
 
 ### 프로젝트 셋업
-- [ ] Next.js 15 프로젝트 생성 (`/workspace/frontend`, App Router, TypeScript)
-- [ ] TailwindCSS v4 설치 및 설정
-- [ ] pnpm 패키지 매니저 설정
-- [ ] 패키지 설치: `axios`, `@tanstack/react-query`, `zustand`, `lucide-react`, `date-fns`
-- [ ] `lib/api.ts` — axios 인스턴스 생성 (baseURL: `http://localhost:8080`)
-- [ ] `app/providers.tsx` — TanStack Query Provider, QueryClient 설정
-- [ ] `app/layout.tsx` — Provider 적용, 전역 폰트/스타일 설정
+- [x] Next.js 프로젝트 생성 (App Router, TypeScript) — Next.js 16.2.3
+- [x] TailwindCSS v4 설치 및 설정
+- [x] npm 사용 (pnpm 대신)
+- [x] 패키지 설치: `axios`, `@tanstack/react-query`, `zustand`, `lucide-react`, `date-fns`
+- [x] `src/shared/lib/api.ts` — axios 인스턴스, 토큰 관리, 인터셉터
+- [x] `app/providers.tsx` — TanStack Query Provider, QueryClient 설정
+- [x] `app/layout.tsx` — Provider 적용, 전역 폰트/스타일 설정
 
 ### 타입 정의
-- [ ] `types/index.ts` — `ReminderList`, `Reminder` 인터페이스 정의
+- [x] `features/reminder-list/types/` — `ReminderList`, `CreateReminderListRequest`, `UpdateReminderListRequest`
+- [x] `features/reminder/types/` — `Reminder`, `CreateReminderRequest`
 
 ### API Hooks
-- [ ] `hooks/useLists.ts`
-  - [ ] `useGetLists()` — `GET /api/lists`
-  - [ ] `useCreateList()` — `POST /api/lists`
-- [ ] `hooks/useReminders.ts`
-  - [ ] `useGetReminders(listId)` — `GET /api/lists/{listId}/reminders`
-  - [ ] `useCreateReminder(listId)` — `POST /api/lists/{listId}/reminders`
+- [x] `features/reminder-list/hooks/useLists.ts`
+  - [x] `useGetLists()` — `GET /api/reminder-lists`
+  - [x] `useCreateList()` — `POST /api/reminder-lists`
+  - [x] `useUpdateList()`, `useDeleteList()` (Phase 2 항목 선완료)
+- [x] `features/reminder/hooks/useReminders.ts`
+  - [x] `useGetReminders(listId)` — `GET /api/reminder-lists/{listId}/reminders`
+  - [x] `useCreateReminder(listId)` — `POST /api/reminder-lists/{listId}/reminders`
 
 ### 레이아웃 & 컴포넌트
-- [ ] `components/layout/AppLayout.tsx` — 3-panel 레이아웃 뼈대
-- [ ] `components/layout/Sidebar.tsx` — 목록 리스트 렌더링 (API 연동)
-- [ ] `components/reminder/ReminderListView.tsx` — 목록 클릭 시 리마인더 표시
-- [ ] `store/uiStore.ts` — 선택된 listId 상태 관리 (Zustand)
-- [ ] `app/page.tsx` — AppLayout 진입점
+- [x] `app/page.tsx` — Sidebar + ReminderListView 레이아웃 (AppLayout 컴포넌트 없이 인라인)
+- [x] `features/reminder-list/components/Sidebar.tsx` — 목록 리스트 렌더링 (API 연동)
+- [x] `features/reminder/components/ReminderListView.tsx` — 목록 클릭 시 리마인더 표시
+- [x] `features/reminder-list/store/uiStore.ts` — 선택된 listId 상태 관리 (Zustand)
 
 ### Phase 1 완료 기준
-- [ ] `pnpm dev` 실행 후 브라우저에서 목록 조회/생성 동작 확인
-- [ ] 리마인더 추가 후 목록에 표시 확인
+- [x] 브라우저에서 목록 조회/생성 동작 확인
+- [x] 리마인더 추가 후 목록에 표시 확인
 
 ---
 
 ## Phase 2 — 핵심 CRUD + Apple 스타일 UI
 
 ### API Hooks 확장
-- [ ] `useUpdateList()` — `PUT /api/lists/{id}`
-- [ ] `useDeleteList()` — `DELETE /api/lists/{id}`
-- [ ] `useUpdateReminder()` — `PUT /api/reminders/{id}`
-- [ ] `useDeleteReminder()` — `DELETE /api/reminders/{id}`
-- [ ] `useToggleComplete()` — `PATCH /api/reminders/{id}/complete`
+- [x] `useUpdateList()` — `PUT /api/reminder-lists/{id}`
+- [x] `useDeleteList()` — `DELETE /api/reminder-lists/{id}`
+- [x] `useUpdateReminder()` — `PUT /api/reminders/{id}`
+- [x] `useDeleteReminder()` — `DELETE /api/reminders/{id}`
+- [x] `useToggleComplete()` — `PATCH /api/reminders/{id}/complete`
 
 ### 사이드바 UI (Apple Reminders 스타일)
-- [ ] 스마트 목록 섹션
-  - [ ] `SmartListIcon.tsx` — 컬러 원형 배경 + 아이콘 컴포넌트
-  - [ ] 오늘 (파란 달력 아이콘), 예정됨 (빨간 달력), 전체 (회색 목록), 완료됨 (회색 체크), 플래그됨 (주황 깃발)
-  - [ ] 항목 클릭 시 파란 하이라이트 선택 처리
-- [ ] 나의 목록 섹션
-  - [ ] 색상 원형 + 목록명 + 미완료 개수 배지
-  - [ ] 목록 클릭 시 선택 처리
-  - [ ] `+ 목록 추가` 버튼 (하단 고정)
-- [ ] 사이드바 전체 배경: `#F2F2F7`, 텍스트: `#1C1C1E`
+- [x] 스마트 목록 섹션 (Sidebar.tsx에 인라인 — 별도 SmartListIcon 컴포넌트 없이)
+  - [x] 오늘, 예정됨, 전체, 완료됨, 플래그됨 (2열 그리드)
+  - [x] 항목 클릭 시 파란 하이라이트 선택 처리
+- [x] 나의 목록 섹션
+  - [x] 색상 원형 + 목록명 + 미완료 개수 배지
+  - [x] 목록 클릭 시 선택 처리
+  - [x] `+ 목록 추가` 버튼 (하단 고정)
+- [x] 사이드바 전체 배경: `#F2F2F7`, 텍스트: `#1C1C1E`
 
 ### 리마인더 행 (`ReminderRow.tsx`)
-- [ ] 원형 체크박스 (목록 색상 테두리/배경)
-- [ ] 완료 클릭 시 체크 애니메이션 (0.3s) → 페이드아웃 후 완료 섹션 이동
-- [ ] 제목 텍스트 (완료 시 `line-through` + 회색)
-- [ ] 메모 미리보기 1줄 (`text-ellipsis overflow-hidden`)
-- [ ] 마감일 표시 (기한 초과 시 빨간색)
-- [ ] 우선순위 느낌표 (`!` / `!!` / `!!!`, 빨간색, 우측 정렬)
-- [ ] 플래그 아이콘 (주황색, 우측)
-- [ ] 호버 시 배경 미세 변경 + `...` 버튼 노출
+- [x] 원형 체크박스 (목록 색상 테두리/배경)
+- [x] 완료 클릭 시 페이드아웃 애니메이션 (0.3s) → 완료 섹션 이동
+- [x] 제목 텍스트 (완료 시 `line-through` + 회색)
+- [x] 메모 미리보기 1줄 (truncate)
+- [x] 마감일 표시 (기한 초과 시 빨간색)
+- [x] 우선순위 느낌표 (`!` / `!!` / `!!!`, 빨간색, 우측 정렬)
+- [x] 플래그 아이콘 (주황색, 우측)
+- [x] 호버 시 배경 미세 변경 + `...` 버튼 노출
 
 ### 인라인 리마인더 추가 (`InlineReminderInput.tsx`)
-- [ ] `+ 새 리마인더` 플레이스홀더 표시
-- [ ] 클릭 시 즉시 input 포커스
-- [ ] `Enter` → 저장 + 새 input 활성화 (연속 입력)
-- [ ] `Escape` → 입력 취소
+- [x] `+ 새 리마인더` 버튼
+- [x] 클릭 시 즉시 input 포커스
+- [x] `Enter` → 저장 + 입력 유지
+- [x] `Escape` → 입력 취소
 
 ### 완료 항목 섹션
-- [ ] `▾ 완료됨` 헤더 클릭으로 접기/펼치기 토글
-- [ ] 완료 항목 취소선 + 회색 텍스트
+- [x] `완료됨 N` 헤더 클릭으로 접기/펼치기 토글
+- [x] 완료 항목 취소선 + 회색 텍스트
 
 ### 목록 생성/수정 모달 (`ListFormModal.tsx`)
-- [ ] 이름 입력 필드
-- [ ] `ColorPicker.tsx` — 16색 팔레트 선택
-  - [ ] Apple 기본 16색 정의 (Red, Orange, Yellow, Green, Mint, Teal, Cyan, Blue, Indigo, Purple, Pink, Brown, Gray 등)
-  - [ ] 선택된 색상 체크 표시
-- [ ] 색상 원형 아이콘 미리보기 (실시간)
-- [ ] `취소` / `완료` 버튼
-- [ ] 사이드바 `+ 목록 추가` 클릭 시 모달 오픈
+- [x] 이름 입력 필드
+- [x] `ColorPicker.tsx` — Apple 13색 팔레트 선택
+  - [x] 선택된 색상 체크 표시
+- [x] 색상 원형 아이콘 미리보기 (실시간)
+- [x] `취소` / `완료` 버튼
+- [x] 사이드바 `+ 목록 추가` 클릭 시 모달 오픈
 
 ### Phase 2 완료 기준
 - [ ] Apple Reminders와 시각적으로 유사한 사이드바/목록 화면 확인

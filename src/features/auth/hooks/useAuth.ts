@@ -4,11 +4,14 @@ import { authService } from "../services/authService";
 import useAuthStore from "../store/authStore";
 
 export function useLogin() {
-  const setTokens = useAuthStore((s) => s.setTokens);
+  const { setTokens, setUser } = useAuthStore();
   return useMutation({
     mutationFn: authService.login,
-    onSuccess: ({ accessToken, refreshToken }) => {
+    onSuccess: async ({ accessToken, refreshToken }) => {
       setTokens(accessToken, refreshToken);
+      setAuthToken(accessToken);
+      const user = await authService.me();
+      setUser(user);
     },
   });
 }

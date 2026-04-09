@@ -20,4 +20,9 @@ export const authService = {
   logout: async (refreshToken: string): Promise<void> => {
     await api.post("/api/auth/logout", { refreshToken });
   },
+
+  me: async (): Promise<MemberResponse> => {
+    const { data: res } = await api.get<MemberResponse>("/api/members/me");
+    return res;
+  },
 };
