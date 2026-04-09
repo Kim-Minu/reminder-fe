@@ -38,7 +38,7 @@ export default function RegisterForm() {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          className="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700"
           placeholder="홍길동"
         />
       </div>
@@ -54,7 +54,7 @@ export default function RegisterForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          className="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700"
           placeholder="you@example.com"
         />
       </div>
@@ -71,7 +71,7 @@ export default function RegisterForm() {
           minLength={8}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          className="px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700"
           placeholder="8자 이상"
         />
       </div>
@@ -90,7 +90,7 @@ export default function RegisterForm() {
             setConfirm(e.target.value);
             setConfirmError("");
           }}
-          className={`px-3 py-2 rounded-lg border text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
+          className={`px-3 py-2 rounded-lg border text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 ${
             confirmError ? "border-red-400" : "border-gray-300"
           }`}
           placeholder="••••••••"

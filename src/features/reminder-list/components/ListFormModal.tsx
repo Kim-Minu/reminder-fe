@@ -38,11 +38,10 @@ export default function ListFormModal({ onClose }: Props) {
         {/* 이름 입력 */}
         <input
           autoFocus
-          className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
           placeholder="목록 이름"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         />
 
         {/* 색상 선택 */}

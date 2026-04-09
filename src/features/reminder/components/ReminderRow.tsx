@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Flag, MoreHorizontal } from "lucide-react";
 import { format, isPast, isToday } from "date-fns";
-import type { Reminder } from "../types";
+import {priority, Reminder} from "../types";
 
 const PRIORITY_LABELS: Record<number, string> = { 1: "!", 2: "!!", 3: "!!!" };
 
@@ -80,7 +80,7 @@ export default function ReminderRow({ reminder, color, onToggleComplete, onDelet
 
       {/* 우측 메타 */}
       <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
-        {reminder.priority > 0 && (
+        {reminder.priority === priority.HIGH && (
           <span className="text-xs font-bold text-red-500">
             {PRIORITY_LABELS[reminder.priority]}
           </span>

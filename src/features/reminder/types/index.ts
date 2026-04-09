@@ -5,7 +5,7 @@ export interface Reminder {
   notes?: string;
   isCompleted: boolean;
   isFlagged: boolean;
-  priority: 0 | 1 | 2 | 3;
+  priority: priority;
   dueDate?: string;
   displayOrder: number;
   createdAt: string;
@@ -20,6 +20,13 @@ export interface UpdateReminderRequest {
   title: string;
   notes?: string;
   isFlagged?: boolean;
-  priority?: 0 | 1 | 2 | 3;
+  priority?: priority;
   dueDate?: string;
+}
+
+export enum priority {
+  NONE,
+  LOW,
+  MEDIUM,
+  HIGH
 }
