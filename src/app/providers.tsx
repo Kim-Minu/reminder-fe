@@ -8,6 +8,7 @@ import useAuthStore from "@/features/auth/store/authStore";
 function AuthInitializer() {
   const accessToken = useAuthStore((s) => s.accessToken);
 
+  console.log("AuthInitializer", accessToken);
   useEffect(() => {
     // 페이지 새로고침 후 persist 스토리지에서 복원된 토큰을 axios 헤더에 반영
     setAuthToken(accessToken);
