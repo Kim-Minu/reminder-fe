@@ -6,6 +6,18 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+if (typeof window !== "undefined") {
+  try {
+    const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+    if (stored) {
+      const { state } = JSON.parse(stored);
+      if (state?.accessToken) {
+        api.defaults.headers.common["Authorization"] = `Bearer ${state.accessToken}`;
+      }
+    }
+  } catch {}
+}
+
 /** 로그인/로그아웃 시 호출해 Authorization 헤더를 즉시 반영 */
 export function setAuthToken(token: string | null): void {
   console.log(token)
@@ -21,11 +33,11 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     if ((status === 401 || status === 403) && typeof window !== "undefined") {
-      //setAuthToken(null);
-      //localStorage.removeItem(AUTH_STORAGE_KEY);
-      // if (!window.location.pathname.startsWith("/login")) {
-      //   window.location.href = "/login";
-      // }
+      setAuthToken(null);
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      if (!window.location.pathname.startsWith("/login")) {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }

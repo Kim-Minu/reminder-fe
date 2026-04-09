@@ -9,7 +9,6 @@ export function useLogin() {
     mutationFn: authService.login,
     onSuccess: ({ accessToken, refreshToken }) => {
       setTokens(accessToken, refreshToken);
-      setAuthToken(accessToken);
     },
   });
 }

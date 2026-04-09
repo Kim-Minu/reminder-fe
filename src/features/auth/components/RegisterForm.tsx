@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useRegister } from "../hooks/useAuth";
+import { useRegister } from "@/features/auth";
 
 export default function RegisterForm() {
   const router = useRouter();

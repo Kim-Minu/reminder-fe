@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { setAuthToken } from "@/shared/lib/api";
 import { AUTH_STORAGE_KEY } from "@/shared/constants";
 
 interface AuthState {
@@ -19,7 +20,12 @@ const useAuthStore = create<AuthState>()(
       clearTokens: () => set({ accessToken: null, refreshToken: null }),
       isAuthenticated: () => get().accessToken !== null,
     }),
-    { name: AUTH_STORAGE_KEY }
+    {
+      name: AUTH_STORAGE_KEY,
+      onRehydrateStorage: () => (state) => {
+        if (state?.accessToken) setAuthToken(state.accessToken);
+      },
+    }
   )
 );
 
