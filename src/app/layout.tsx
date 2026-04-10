@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import AppShell from "@/shared/components/AppShell";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -9,8 +10,8 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Reminders",
-  description: "Apple Reminders Web Version",
+  title: "BudgetLab",
+  description: "BudgetLab — 리마인더, 장바구니, 예산 관리",
 };
 
 export default function RootLayout({
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${geist.variable} h-full antialiased`}>
       <body className="h-full">
-        <Providers>{children}</Providers>
+        <Providers>
+          <AppShell>{children}</AppShell>
+        </Providers>
       </body>
     </html>
   );

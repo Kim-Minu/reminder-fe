@@ -206,6 +206,93 @@
 
 ---
 
+## Phase 6 — FNB + 신규 메뉴 페이지
+
+### 공통 — FNB (Footer Navigation Bar)
+- [x] `src/shared/components/BottomNav.tsx` 생성
+  - [x] 5개 탭: 미리알림 / 장바구니 / 홈 / 예산 / 마이페이지
+  - [x] 현재 경로(`usePathname`) 기준 active 탭 하이라이트 (파란색)
+  - [x] 모바일에서만 표시 (`md:hidden`), 데스크탑 숨김
+  - [x] `layout.tsx`에 전역 삽입
+  - [x] 메인 콘텐츠 하단 패딩 (`pb-16`) 추가 — FNB에 가림 방지
+
+### 홈 (`/home`)
+- [ ] `app/home/page.tsx` 생성
+- [ ] 전체 요약 카드 (오늘 리마인더 수 / 장바구니 항목 수 / 예산 잔액)
+- [ ] 최근 리마인더 목록 (최대 5개)
+- [ ] 빠른 추가 버튼 → 미리알림 페이지 이동
+
+### 미리알림 (`/`) — 기존 기능 유지
+- [ ] FNB active 상태 연동 확인
+- [ ] 모바일 사이드바 토글 유지
+
+### 장바구니 (`/cart`)
+
+> 해당 월의 주간별 관리 / 디자인 컨셉: 영수증(Receipt) 스타일
+
+#### 타입 & API 연동
+- [x] `features/cart/types/index.ts` — `CartWeek`, `CartItem` 타입 정의
+  - [x] `CartWeek`: `id`, `label`, `year`, `month`, `weekOfMonth`, `items`, `totalAmount`, `checkedAmount`
+  - [x] `CartItem`: `id`, `name`, `quantity`, `unitPrice`, `lineTotal`, `isChecked`
+- [x] `features/cart/services/cartService.ts` — API 호출 함수
+- [x] `features/cart/hooks/useCart.ts`
+  - [x] `useGetCartByMonth(year, month)` — 월별 주차 목록 조회
+  - [x] `useCreateWeek(year, month)` — 주차 생성
+  - [x] `useCreateItem(year, month)` — 아이템 추가
+  - [x] `useUpdateItem(year, month)` — 아이템 수정
+  - [x] `useDeleteItem(year, month)` — 아이템 삭제
+  - [x] `useToggleCheck(year, month)` — 체크 토글
+  - [x] `useDeleteChecked(year, month)` — 체크 항목 일괄 삭제
+
+#### 페이지 & 컴포넌트
+- [x] `app/cart/page.tsx` 생성
+- [x] 월 선택 네비게이션 (이전/다음 달 이동)
+- [x] `features/cart/components/WeekReceipt.tsx` — 주차별 영수증 카드
+  - [x] **영수증 디자인 컨셉**
+    - [x] 흰 배경 + SVG 지그재그 상하단 절취선
+    - [x] 상단: 다크 헤더 (`Shopping List` / 주차 라벨 / 날짜 범위)
+    - [x] 중단: 아이템 목록 — 품명 / 수량 / 단가 / 소계 (영수증 행 형태)
+    - [x] 구분선: 점선 (`border-dashed`) + 이중선 (`border-double`) 합계 구분
+    - [x] 하단: `TOTAL ₩ 00,000` 스타일 굵게 + 바코드 장식
+    - [x] 폰트: `font-mono` 전체 적용
+- [x] `features/cart/components/CartItemRow.tsx` — 영수증 한 행
+  - [x] 품명 / 수량 / 단가 / 소계 4열 레이아웃
+  - [x] 체크 시 취소선 + 흐리게 (`opacity-40`)
+  - [x] 더블클릭 → 인라인 수정 모드 (Enter/Escape/onBlur)
+  - [x] 호버 시 삭제 버튼 노출
+- [x] `features/cart/components/InlineCartInput.tsx` — 인라인 아이템 추가
+  - [x] 품명 / 수량 / 단가 입력 (Enter로 저장)
+  - [x] 한글 IME `isComposing` 처리
+- [x] 주차 없을 때 "N주차 장바구니 추가" 버튼 → 주차 자동 생성
+- [x] 체크된 항목 일괄 삭제 버튼 (영수증 하단)
+
+### 예산 (`/budget`)
+- [ ] `app/budget/page.tsx` 생성
+- [ ] 예산 타입 정의 (`category`, `amount`, `spent`, `month`)
+- [ ] 이번 달 총 예산 / 지출 / 잔액 요약 카드
+- [ ] 카테고리별 예산 목록 (프로그레스 바 — 지출 비율)
+- [ ] 예산 항목 추가 / 수정 / 삭제
+- [ ] 월 선택 네비게이션 (이전/다음 달)
+- [ ] API 연동 또는 로컬 스토어 결정
+
+### 마이페이지 (`/mypage`)
+- [ ] `app/mypage/page.tsx` 생성
+- [ ] 유저 정보 표시 (이름 / 이메일 / 아바타)
+- [ ] 로그아웃 버튼
+- [ ] 설정 섹션
+  - [ ] 다크모드 토글 (Phase 5 연동)
+  - [ ] 알림 설정 (UI만)
+- [ ] 계정 정보 수정 (이름 변경) — API 연동
+
+### Phase 6 완료 기준
+- [ ] FNB 탭 전환 시 active 상태 정확히 반영 확인
+- [ ] 홈 요약 카드 데이터 정확성 확인
+- [x] 장바구니 CRUD 동작 확인 (BE 연동 대기)
+- [ ] 예산 등록 → 프로그레스 바 반영 확인
+- [ ] 마이페이지 유저 정보 표시 + 로그아웃 확인
+
+---
+
 ## 전체 진행 현황
 
 | Phase | 설명 | 진행 |
@@ -215,3 +302,4 @@
 | Phase 3 | 상세 패널 + 스마트 목록 | 🔲 |
 | Phase 4 | 고급 기능 | 🔲 |
 | Phase 5 | 다크모드 + 마무리 | 🔲 |
+| Phase 6 | FNB + 신규 메뉴 페이지 | 🔲 |

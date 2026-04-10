@@ -1,7 +1,7 @@
 import Link from "next/link";
 import RegisterForm from "@/features/auth/components/RegisterForm";
 
-export const metadata = { title: "계정 만들기 — 리마인더" };
+export const metadata = { title: "계정 만들기 — BudgetLab" };
 
 export default function Page() {
   return (
@@ -24,7 +24,7 @@ export default function Page() {
             </svg>
           </div>
           <h1 className="text-xl font-bold text-[#1C1C1E]">계정 만들기</h1>
-          <p className="text-sm text-gray-400">리마인더를 시작해 보세요</p>
+          <p className="text-sm text-gray-400">BudgetLab을 시작해 보세요</p>
         </div>
 
         <RegisterForm />

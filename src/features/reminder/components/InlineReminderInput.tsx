@@ -27,7 +27,7 @@ export default function InlineReminderInput({ color, onSubmit }: Props) {
   };
 
   const handleKeyDown = async (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
       await submit();
     } else if (e.key === "Escape") {
       setTitle("");

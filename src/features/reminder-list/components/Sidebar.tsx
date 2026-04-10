@@ -1,38 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, CalendarClock, List, CheckCircle, Flag, Plus, LogOut } from "lucide-react";
+import { Calendar, CalendarClock, List, CheckCircle, Flag, Plus } from "lucide-react";
 import { useGetLists } from "../hooks/useLists";
 import useUiStore from "../store/uiStore";
 import ListFormModal from "./ListFormModal";
-import { useLogout } from "@/features/auth/hooks/useAuth";
-import useAuthStore from "@/features/auth/store/authStore";
-import { useRouter } from "next/navigation";
 
 const SMART_LISTS = [
-  { id: "today",     label: "오늘",   icon: Calendar,     bg: "#007AFF" },
-  { id: "scheduled", label: "예정됨", icon: CalendarClock, bg: "#FF3B30" },
-  { id: "all",       label: "전체",   icon: List,         bg: "#8E8E93" },
-  { id: "completed", label: "완료됨", icon: CheckCircle,  bg: "#8E8E93" },
-  { id: "flagged",   label: "플래그됨", icon: Flag,        bg: "#FF9500" },
+  { id: "today",     label: "오늘",     icon: Calendar,     bg: "#007AFF" },
+  { id: "scheduled", label: "예정됨",   icon: CalendarClock, bg: "#FF3B30" },
+  { id: "all",       label: "전체",     icon: List,         bg: "#8E8E93" },
+  { id: "completed", label: "완료됨",   icon: CheckCircle,  bg: "#8E8E93" },
+  { id: "flagged",   label: "플래그됨", icon: Flag,         bg: "#FF9500" },
 ] as const;
 
 type SmartListId = (typeof SMART_LISTS)[number]["id"];
 
-export default function Sidebar() {
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function Sidebar({ isOpen, onClose }: Props) {
   const { data: lists, isLoading } = useGetLists();
   const { selectedListId, setSelectedListId } = useUiStore();
   const [smartSelected, setSmartSelected] = useState<SmartListId | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const user = useAuthStore((s) => s.user);
-  const logout = useLogout();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    logout.mutate(undefined, {
-      onSettled: () => router.replace("/login"),
-    });
-  };
 
   const handleSmartSelect = (id: SmartListId) => {
     setSmartSelected(id);
@@ -42,33 +35,17 @@ export default function Sidebar() {
   const handleListSelect = (id: number) => {
     setSmartSelected(null);
     setSelectedListId(id);
+    onClose();
   };
 
   return (
     <>
-      <aside className="w-64 h-full bg-[#F2F2F7] flex flex-col select-none shrink-0">
-        {/* 유저 정보 */}
-        {user && (
-          <div className="px-4 pt-5 pb-3 border-b border-black/5 flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center shrink-0">
-              <span className="text-white text-xs font-semibold">
-                {user.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-[#1C1C1E] truncate">{user.name}</p>
-              <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
-              title="로그아웃"
-            >
-              <LogOut size={14} />
-            </button>
-          </div>
-        )}
-
+      <aside className={`
+        fixed inset-y-0 left-0 z-30 w-64 bg-[#F2F2F7] flex flex-col select-none shrink-0
+        transition-transform duration-300
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        md:relative md:translate-x-0 md:z-auto
+      `}>
         {/* 스마트 목록 */}
         <div className="px-4 pt-4 pb-2">
           <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 mb-1">
@@ -133,7 +110,7 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* 하단 영역 */}
+        {/* 하단: 목록 추가 */}
         <div className="px-4 py-4 border-t border-black/5">
           <button
             onClick={() => setShowModal(true)}

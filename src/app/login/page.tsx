@@ -1,7 +1,7 @@
 import Link from "next/link";
 import LoginForm from "@/features/auth/components/LoginForm";
 
-export const metadata = { title: "로그인 — 리마인더" };
+export const metadata = { title: "로그인 — BudgetLab" };
 
 export default function Page() {
   return (
@@ -23,7 +23,7 @@ export default function Page() {
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
             </svg>
           </div>
-          <h1 className="text-xl font-bold text-[#1C1C1E]">리마인더</h1>
+          <h1 className="text-xl font-bold text-[#1C1C1E]">BudgetLab</h1>
           <p className="text-sm text-gray-400">계속하려면 로그인하세요</p>
         </div>
 

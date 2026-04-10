@@ -42,6 +42,9 @@ export default function ListFormModal({ onClose }: Props) {
           placeholder="목록 이름"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.nativeEvent.isComposing) handleSubmit();
+          }}
         />
 
         {/* 색상 선택 */}

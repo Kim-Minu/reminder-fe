@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, Menu } from "lucide-react";
 import { useGetReminders, useCreateReminder, useDeleteReminder, useToggleComplete } from "../hooks/useReminders";
 import { useGetLists } from "@/features/reminder-list/hooks/useLists";
 import useUiStore from "@/features/reminder-list/store/uiStore";
 import ReminderRow from "./ReminderRow";
 import InlineReminderInput from "./InlineReminderInput";
 
-export default function ReminderListView() {
+interface Props {
+  onMenuClick: () => void;
+}
+
+export default function ReminderListView({ onMenuClick }: Props) {
   const { selectedListId } = useUiStore();
   const { data: lists } = useGetLists();
   const { data: reminders, isLoading } = useGetReminders(selectedListId);
@@ -26,15 +30,25 @@ export default function ReminderListView() {
 
   if (!selectedListId) {
     return (
-      <div className="flex-1 flex items-center justify-center text-gray-400 text-sm">
-        목록을 선택하세요
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
+        <header className="px-4 pt-4 pb-2 shrink-0 md:hidden">
+          <button onClick={onMenuClick} className="text-gray-500 hover:text-gray-700">
+            <Menu size={22} />
+          </button>
+        </header>
+        <div className="flex-1 flex items-center justify-center text-gray-400 text-sm">
+          목록을 선택하세요
+        </div>
       </div>
     );
   }
 
   return (
     <div className="flex-1 flex flex-col h-full overflow-hidden">
-      <header className="px-8 pt-8 pb-4 shrink-0">
+      <header className="px-4 md:px-8 pt-4 md:pt-8 pb-4 shrink-0">
+        <button onClick={onMenuClick} className="mb-3 text-gray-500 hover:text-gray-700 md:hidden">
+          <Menu size={22} />
+        </button>
         <h1 className="text-3xl font-bold" style={{ color }}>
           {selectedList?.name ?? ""}
         </h1>
