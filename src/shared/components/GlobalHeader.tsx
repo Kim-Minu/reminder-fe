@@ -26,14 +26,6 @@ export default function GlobalHeader() {
       {/* 우측: 유저 정보 */}
       {user && (
         <div className="ml-auto flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center shrink-0">
-              <span className="text-white text-[10px] font-semibold">
-                {user.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
-            <span className="text-xs text-gray-300 hidden sm:block">{user.name}</span>
-          </div>
           <button
             onClick={handleLogout}
             className="text-gray-400 hover:text-white transition-colors"

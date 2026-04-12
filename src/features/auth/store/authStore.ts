@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { setAuthToken } from "@/shared/lib/api";
+import { setAuthToken, registerAuthHandlers } from "@/shared/lib/api";
 import { AUTH_STORAGE_KEY } from "@/shared/constants";
 
 interface User {
@@ -37,6 +37,15 @@ const useAuthStore = create<AuthState>()(
       },
     }
   )
+);
+
+registerAuthHandlers(
+  () => useAuthStore.getState().refreshToken,
+  (accessToken, refreshToken) => useAuthStore.getState().setTokens(accessToken, refreshToken),
+  () => {
+    setAuthToken(null);
+    useAuthStore.getState().clearTokens();
+  },
 );
 
 export default useAuthStore;

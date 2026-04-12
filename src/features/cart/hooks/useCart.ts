@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { cartService } from "../services/cartService";
-import type { CreateCartItemRequest, UpdateCartItemRequest } from "../types";
+import type { CreateCartItemRequest, UpdateCartItemRequest, SetBudgetRequest } from "../types";
 
 const cartKey = (year: number, month: number) => ["cart", year, month] as const;
 
@@ -57,6 +57,15 @@ export function useDeleteChecked(year: number, month: number) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (weekId: number) => cartService.deleteChecked(weekId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: cartKey(year, month) }),
+  });
+}
+
+export function useSetBudget(year: number, month: number) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ weekId, ...payload }: { weekId: number } & SetBudgetRequest) =>
+      cartService.setBudget(weekId, payload),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: cartKey(year, month) }),
   });
 }

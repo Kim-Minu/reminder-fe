@@ -1,5 +1,5 @@
 import api from "@/shared/lib/api";
-import type { CartWeek, CreateCartItemRequest, UpdateCartItemRequest } from "../types";
+import type { CartWeek, CreateCartItemRequest, UpdateCartItemRequest, SetBudgetRequest } from "../types";
 
 export const cartService = {
   getByMonth: async (year: number, month: number): Promise<CartWeek[]> => {
@@ -33,5 +33,10 @@ export const cartService = {
 
   deleteChecked: async (weekId: number): Promise<void> => {
     await api.delete(`/api/cart/weeks/${weekId}/checked`);
+  },
+
+  setBudget: async (weekId: number, payload: SetBudgetRequest): Promise<CartWeek> => {
+    const { data } = await api.put<CartWeek>(`/api/cart/weeks/${weekId}/budget`, payload);
+    return data;
   },
 };

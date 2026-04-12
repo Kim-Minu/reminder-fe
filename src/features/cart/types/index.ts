@@ -16,6 +16,11 @@ export interface CartWeek {
   items: CartItem[];
   totalAmount: number;
   checkedAmount: number;
+  budget?: number;
+}
+
+export interface SetBudgetRequest {
+  budget: number;
 }
 
 export interface CreateCartItemRequest {
