@@ -55,19 +55,15 @@ export default function BudgetView() {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4">
+      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 ">
 
         {/* 연간 요약 카드 */}
-        <div className="bg-white rounded-sm shadow-md overflow-hidden">
+        <div className="bg-white rounded-sm shadow-md overflow-hidden ">
           <Zigzag />
           <div className="px-4 py-4">
-            <p className="text-[10px] text-gray-400 tracking-widest uppercase text-center mb-3">
-              {year} ANNUAL BUDGET
-            </p>
-
             {/* 연간 예산 설정 */}
-            <div className="flex items-center justify-between border-b border-dashed border-gray-200 pb-2 mb-3">
-              <span className="text-[10px] text-gray-400 tracking-widest uppercase">연간 월 예산</span>
+            <div className="flex items-center justify-between border-b border-dashed border-gray-200 pb-2 mb-3 ">
+              <span className="text-[10px] text-gray-400 tracking-widest uppercase">{year}년 월간 예산</span>
               {yearlyEditing ? (
                 <div className="flex items-center gap-1.5">
                   <input

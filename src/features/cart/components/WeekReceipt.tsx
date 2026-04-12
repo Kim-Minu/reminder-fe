@@ -54,7 +54,7 @@ export default function WeekReceipt({
   const [budgetInput, setBudgetInput] = useState("");
 
   return (
-    <div className="bg-white rounded-sm shadow-md overflow-hidden font-mono max-w-7xl m-auto min-h-full flex flex-col">
+    <div className="bg-white rounded-sm shadow-md overflow-hidden font-mono  min-h-full flex flex-col">
       {/* 상단 절취선 */}
       <Zigzag />
 

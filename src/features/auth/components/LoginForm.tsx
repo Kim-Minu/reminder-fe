@@ -14,7 +14,7 @@ export default function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await login.mutateAsync({ email, password });
-    router.replace("/");
+    router.replace("/cart");
   };
 
   return (

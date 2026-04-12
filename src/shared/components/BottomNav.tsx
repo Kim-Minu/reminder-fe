@@ -4,11 +4,11 @@ import { ListTodo, ShoppingCart, Home, Wallet, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
-  { label: "미리알림", icon: ListTodo,          href: "/" },
+  //{ label: "미리알림", icon: ListTodo,          href: "/" },
   { label: "장바구니", icon: ShoppingCart,  href: "/cart" },
-  { label: "홈",       icon: Home,          href: "/home" },
+  // { label: "홈",       icon: Home,          href: "/home" },
   { label: "예산",     icon: Wallet,        href: "/budget" },
-  { label: "MY", icon: User,        href: "/mypage" },
+  //{ label: "MY", icon: User,        href: "/mypage" },
 ] as const;
 
 export default function BottomNav() {
